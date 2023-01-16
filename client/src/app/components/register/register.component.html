@@ -1,0 +1,21 @@
+<div *ngIf="!share.LoggedIn()">
+  <form class="w-25"  #f="ngForm" (ngSubmit)="register(f)">
+    <div class="form-group">
+      <label for="inputEmail">Email</label>
+      <input #email="ngModel"required  name="email" ngModel type="email" class="form-control" id="inputEmail" placeholder="Email">
+  </div>
+  <div class="form-group">
+      <label for="inputPassword">Password</label>
+      <input #password="ngModel" required name="password" ngModel type="password" class="form-control" id="inputPassword" placeholder="Password">
+  </div>
+    <div class="form-group">
+      <label for="inputPasswordConfirm">Confirm</label>
+      <input type="password"required  #confirm="ngModel" name="confirm" ngModel class="form-control" id="inputPasswordConfirm" placeholder="ConfirmPassword">
+  </div>
+  <div class="form-group">
+    <a  style="text-decoration: underline; color: blue;"routerLink="/login">I have an account </a>
+  </div>
+
+    <button type="submit" class="btn btn-primary">Sign up</button>
+</form>
+</div>

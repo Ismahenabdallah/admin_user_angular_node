@@ -1,0 +1,16 @@
+<div *ngIf="!share.LoggedIn()">
+  <form class="w-25"  #f="ngForm" (ngSubmit)="login(f)">
+    <div class="form-group">
+        <label for="inputEmail">Email</label>
+        <input #email="ngModel"  required name="email" ngModel type="email" class="form-control" id="inputEmail" placeholder="Email">
+    </div>
+    <div class="form-group">
+        <label for="inputPassword">Password</label>
+        <input #password="ngModel" required  name="password" ngModel type="password" class="form-control" id="inputPassword" placeholder="Password">
+    </div>
+    <div class="form-group">
+      <a style="text-decoration: underline; color: blue;" routerLink="/register">Don't have an account </a>
+    </div>
+    <button type="submit" class="btn btn-primary">Sign in</button>
+</form>
+</div>

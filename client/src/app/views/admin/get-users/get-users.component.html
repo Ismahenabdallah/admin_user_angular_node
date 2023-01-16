@@ -1,0 +1,200 @@
+<div class="container-fluid">
+
+
+  <div class="card shadow mb-4">
+      <div class="card-header py-3 flex ">
+
+
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            <i class="fas fa-user-plus"></i> Add User
+          </button>
+      </div>
+      <div class="card-body">
+          <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                      <tr>
+
+                          <th>Email</th>
+                          <th>livesIn</th>
+                          <th>worksAt</th>
+                          <th>relationship</th>
+                          <th>status</th>
+                          <th>isAdmin</th>
+
+                          <th>Action</th>
+
+                      </tr>
+                  </thead>
+
+
+
+
+
+                  <tbody>
+                    <tr *ngFor="let item of users;index as i">
+
+
+                      <td (click)="details(item._id)"  *ngIf="item.role=='User'">{{item.email}}</td>
+                      <td (click)="details(item._id)"  *ngIf="item.role=='User'">{{item.livesIn}}</td>
+                      <td (click)="details(item._id)"  *ngIf="item.role=='User'">{{item.worksAt}}</td>
+                      <td (click)="details(item._id)"  *ngIf="item.role=='User'">{{item.relationship}}</td>
+                      <td (click)="details(item._id)"  *ngIf="item.role=='User'">{{item.status}}</td>
+                      <td (click)="details(item._id)"  *ngIf="item.role=='User'">{{item.isAdmin}}</td>
+
+                      <td *ngIf="item.role=='User'" class="flex  ">
+                        <button style="margin-right: 10px;"  (click)="getbyid(item._id)" class="btn btn-success " data-toggle="modal" data-target="#exampleModal"><i  class="fas fa-edit "></i></button>
+                        <button style="margin-left: 10px;" (click)="Del(item._id, i)"  class="btn btn-danger"><i   class="  fas fa-trash "></i></button>
+                      </td>
+
+
+
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      <!-- Button trigger modal -->
+
+
+<!-- add Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Add User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+ <div class="container">
+
+  <form [formGroup]="f" (ngSubmit)="Add(f)">
+
+
+    <div class="form-group">
+      <label for="exampleFormControlInput1">email</label>
+      <input type="email" [(ngModel)]="f.email" required class="form-control" formControlName="email" placeholder="email"   name="email" ngModel>
+    </div>
+    <div class="alert alert-danger" *ngIf="(f.get('email')?.touched) && (f.get('email')?.hasError('required')) ">
+     required
+    </div>
+    <div class="alert alert-danger" *ngIf="f.get('email')?.hasError('email')">Is NOt Email</div>
+
+    <div class="form-group">
+
+      <label for="exampleFormControlInput1">password</label>
+      <input type="password"  [(ngModel)]="f.password" required class="form-control" formControlName="password" placeholder="password"  name="password"  ngModel >
+    </div>
+    <div class="alert alert-danger" *ngIf="(f.get('password')?.touched) && (f.get('password')?.hasError('required')) ">
+      required
+     </div>
+
+    <div class="form-group">
+        <label for="exampleFormControlInput1">confirm</label>
+        <input type="password"  [(ngModel)]="f.confirm" required class="form-control" formControlName="confirm"placeholder="confirm" required name="confirm"  minlength="2" maxlength="20" ngModel>
+      </div>
+      <div class="alert alert-danger" *ngIf="(f.get('confirm')?.touched) && (f.get('confirm')?.hasError('required')) ">
+        required
+       </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">livesIn</label>
+        <input type="text" class="form-control"  [(ngModel)]="f.livesIn" formControlName="livesIn" placeholder="livesIn" required name="livesIn"  ngModel>
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">relationship</label>
+        <input type="text"  class="form-control" [(ngModel)]="f.relationship" formControlName="relationship" placeholder="relationship" required name="relationship"  ngModel>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">WorksAt</label>
+        <input type="text" class="form-control"  [(ngModel)]="f.worksAt" formControlName="worksAt" placeholder="WorksAt" required name="worksAt"  ngModel>
+      </div>
+
+      <!-- <div class="alert alert-danger" *ngIf="messageError">
+        {{messageError}}
+      </div> -->
+
+   <button class="btn btn-primary" >Add User</button>
+  </form>
+
+
+ </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+           </div>
+    </div>
+  </div>
+</div>
+<!-- add Model -->
+<!-- update Model-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Update User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #form="ngForm" (ngSubmit)="update(form)">
+
+
+          <div class="form-group">
+            <label for="exampleFormControlInput1">email</label>
+            <input type="email"  ngModel #email="ngModel" [(ngModel)]="dataUser.email" required class="form-control"  placeholder="email" email required name="email" ngModel>
+          </div>
+
+          <!-- <div class=" alert alert-danger" *ngIf="(email.errors?.['required'] && email.touched)" >
+            remplir formulaire </div> -->
+
+
+
+
+            <div class="form-group">
+              <label for="exampleFormControlInput1">livesIn</label>
+              <input type="text" class="form-control"  ngModel #livesIn="ngModel" [(ngModel)]="dataUser.livesIn" placeholder="livesIn" required name="livesIn"  ngModel>
+            </div>
+
+
+
+            <div class="form-group">
+              <label for="exampleFormControlInput1">relationship</label>
+              <input type="text"  class="form-control"ngModel [(ngModel)]="dataUser.relationship" #relationship="ngModel"  placeholder="relationship" required name="relationship"  ngModel>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlInput1">WorksAt</label>
+              <input type="text" class="form-control"  ngModel #worksAt="ngModel"  [(ngModel)]="dataUser.worksAt"  placeholder="WorksAt" required name="worksAt"  ngModel>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlInput1">isAdmin</label>
+              <input type="text" class="form-control"  ngModel #isAdmin="ngModel" [(ngModel)]="dataUser.isAdmin" placeholder="isAdmin" required name="isAdmin"  ngModel>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlInput1">status</label>
+              <input type="text" class="form-control"  ngModel #status="ngModel" [(ngModel)]="dataUser.status" placeholder="status" required name="status"  ngModel>
+            </div>
+            <!-- <div class="alert alert-danger" *ngIf="messageError">
+              {{messageError}}
+            </div> -->
+
+         <button class="btn btn-primary" >update User</button>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+           </div>
+    </div>
+  </div>
+</div>
+<!--end update Model -->
+  </div>
+
+</div>
