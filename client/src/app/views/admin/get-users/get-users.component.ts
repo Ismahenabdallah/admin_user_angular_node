@@ -132,7 +132,16 @@ update(form:any){
  details(id:any){
   this.route.navigate([`/admin/details/${id}`])
 }
+fil=[]
+applyFilter(event: Event) {
+  const filterValue= (event.target as HTMLInputElement).value;
+  this.users.filter = filterValue.trim().toLowerCase();
 
+
+  // if (this.users.paginator) {
+  //   this.users.paginator.firstPage();
+  // }
+}
   ngOnDestroy(): void {
     this.getall.unsubscribe()
   }
